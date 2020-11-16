@@ -63,11 +63,15 @@ namespace Task_PPE
             });
 
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
                 services.AddDbContext<Business_TripsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDbContext<Business_TripsContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("ContextTest")));
+            }
+            else
+            {
+                services.AddDbContext<Business_TripsContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ContextTest")));
+            }
 
             services.BuildServiceProvider().GetService<Business_TripsContext>().Database.Migrate();
         }
